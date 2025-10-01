@@ -27,6 +27,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   vim \
   && apt-get clean && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && apt-get install -y python3-pip python3-venv && \
+  python3 -m venv /opt/awscli-venv && \
+  /opt/awscli-venv/bin/pip install awscli && \
+  ln -s /opt/awscli-venv/bin/aws /usr/local/bin/aws && \
+  apt-get clean && rm -rf /var/lib/apt/lists/*
+
+
 # Ensure default node user has access to /usr/local/share
 RUN mkdir -p /usr/local/share/npm-global && \
   chown -R node:node /usr/local/share

@@ -72,6 +72,8 @@ for domain in \
     "statsig.com" \
     "marketplace.visualstudio.com" \
     "vscode.blob.core.windows.net" \
+    "bedrock-runtime.us-east-1.amazonaws.com" \
+    "bedrock.us-east-1.amazonaws.com" \
     "update.code.visualstudio.com"; do
     echo "Resolving $domain..."
     ips=$(dig +noall +answer A "$domain" | awk '$4 == "A" {print $5}')
