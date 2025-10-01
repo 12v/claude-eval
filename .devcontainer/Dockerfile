@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   ipset \
   iproute2 \
   dnsutils \
+  tcpdump \
   aggregate \
   jq \
   nano \
@@ -95,4 +96,9 @@ USER root
 RUN chmod +x /usr/local/bin/init-firewall.sh && \
   echo "node ALL=(root) NOPASSWD: /usr/local/bin/init-firewall.sh" > /etc/sudoers.d/node-firewall && \
   chmod 0440 /etc/sudoers.d/node-firewall
+USER node
+
+# sudo tcpdump -i any -l -n -s 0 udp port 53
+USER root
+RUN apt-get update && apt-get install -y sudo && usermod -aG sudo node && echo 'node ALL=(ALL) NOPASSWD:ALL' > /etc/sudoers.d/node && chmod 0440 /etc/sudoers.d/node
 USER node
